@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>简易用户信息管理</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<style>
+
+		</style>
+		<link rel="stylesheet" href="lib/bootstrap.min.css">
+		<script src="lib/jquery-1.7.2.js"></script>
+		<script src="lib/bootstrap.js"></script>
+		<script src="vue.js"></script>
+		<script>
+			window.onload=function(){
+				new Vue({
+					el:'#box',				
+					data:{
+						myData:[],
+						username:'',
+						phonenumber:'',
+						nowIndex:-1
+					},
+					methods:{
+						reset:function(){
+							this.username='';
+							this.phonenumber='';
+						},
+						add:function(){
+							this.myData.push({
+								username:this.username,
+								phonenumber:this.phonenumber
+							});
+							this.username='';
+							this.phonenumber='';
+						}
+
+					}
+				});
+			};
+		</script>
+	</head>
+	<body>
+		<div class="container" id="box">
+			<form role="form">
+				<div class="container" id="data-form">
+					<div class="form-group">
+						<label for="username">用户名：</label>
+						<input id="username" type="text" class="form-control" placeholder="请输入用户名" v-mode="username">					
+						<label for="phonenumber">手机号：</label>
+						<input id="phonenumber" type="text" class="form-control" placeholder="请输入手机号" v-mode="phonenumber">
+					</div>
+					<div >
+						<input type="button" id="add" value="添加" class="btn btn-primary" v-on:click="add()">
+						<input type="reset" id="add" value="重置" class="btn btn-primary">
+					</div>
+				</div>
+			</form>
+			<hr>
+			<div>
+				<table class="table table-bordered table-hover">
+					<caption class="h2 text-info">用户信息</caption>
+					<tr class="text-danger">
+							<th class="text-center">序号</th>
+							<th class="text-center">用户名</th>
+							<th class="text-center">手机号</th>
+					</tr>
+					<tr class="text-center" v-for="item in myData">
+						<td>{{$index+1}}</td>
+						<td>{{item.username}}</td>
+						<td>{{item.phonenumber}}</td>						
+					</tr>
+					<tr v-show="myData.length==0">
+							<td colspan="3" class="text-center text-muted">
+								<p>暂无数据....</p>
+							</td>
+						</tr>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>
