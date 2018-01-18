@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue实例1 v-model、v-on使用</title>    
+    <style>
+        .red{
+            color: red;
+        }
+        .blue{
+            background: blue;
+        }
+        .green{
+            color:green;
+        }
+    </style>
+    <script src="vue.js"></script>
+    <script>
+        window.onload=function(){
+            new Vue({
+                el:'#box',
+                data:{  
+                    red:'red',
+                    blue:'blue',
+                    green:'green',
+                    a:true,
+                    b:false,
+                    msg:'Hello你好',
+                    arr:['apple','banana','orange','pear'],
+                    json:{a:'apple',c:'banana',d:'orange'}
+                },
+                methods:{
+                    show:function(){
+                        this.b=!this.b;
+                    },
+                    add:function(){
+                        this.arr.push('tomato');
+                    }
+                }
+            })
+        }
+    </script>
+</head>
+<body>    
+    <div id="box"> 
+        <div>
+            <strong :class="{red:a,blue:a}">{{msg}}</strong>
+            <strong :class="{green:b,blue:b}">Hello你好</strong>
+            <br><!--v-model 代码练习 双向数据绑定!-->
+            <input :class="{red:a,blue:a}" type="text" v-model="msg">
+            <input type="text" v-model="msg">
+            <br>
+            {{arr}}
+            <br>
+            <hr><!--v-for 代码练习 !-->
+            <ul>
+                <li v-for="value in json" >
+                    {{value}}
+                </li>
+            </ul>
+            <hr>
+            <ur>
+                <li v-for="value in json">
+                    {{value}}   {{$index}}
+                </li>
+            </ur>
+            <hr>
+            <ol>
+            有序序列
+                <li v-for="value in json">
+                    {{value}}   {{$index}}  {{$key}}
+                </li>
+            </ol>
+            <hr>
+            <ur>
+                <li v-for="(k,v) in json">
+                    {{k}}   {{v}}   {{$index}}  {{$key}}
+                </li>
+            </ur>
+        </div>
+        <div><!--v-on 代码练习 !-->
+            <input type="button" value="按钮" v-on:click="show()">
+            <input type="button" value="添加" v-on:dblclick="add()">
+            <ul><!--数据源中有重复项时序列中不显示重复数据  !-->
+                <li v-for="value in arr">
+                    {{value}}
+                </li>
+            </ul>
+            <div style="width:100px; height:100px; background: red" v-show="b">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

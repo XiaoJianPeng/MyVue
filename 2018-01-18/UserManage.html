@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>简易用户信息管理</title>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">		
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="lib/bootstrap.min.css">
+		<style>
+			.fontStyle{
+				color:red;
+				font-size:24px;
+			}
+		</style>
+		<script src="lib/jquery-1.7.2.js"></script>
+		<script src="lib/bootstrap.js"></script>
+		<script src="vue.js"></script>
+		<script>
+			window.onload=function(){
+				new Vue({
+					el:'#box',				
+					data:{
+						myData:[],
+						username:'',
+						phonenumber:'',
+						nowIndex:-1,
+						msg:'确认删除数据吗？'
+					},
+					methods:{
+						resetdata:function(){
+							this.username="";
+							this.phonenumber="";
+						},
+						add:function(){
+							this.myData.push({
+								username:this.username,
+								phonenumber:this.phonenumber
+							});
+							this.username="";
+							this.phonenumber="";
+						},
+						deleteData:function(n){
+							if(n<0){
+								this.myData=[];
+								}
+							else{
+									this.myData.splice(n,1);
+								}
+						}
+					}
+				});
+			};
+		</script>
+	</head>
+	<body>
+		<div class="container" id="box">
+			<form role="form">
+				<div class="container" id="data-form">
+					<div class="form-group">
+						<label for="username">用户名：</label>
+						<input id="username" type="text" class="form-control" placeholder="请输入用户名" v-model="username">					
+						<label for="phonenumber">手机号：</label>
+						<input id="phonenumber" type="text" class="form-control" placeholder="请输入手机号" v-model="phonenumber">
+					</div>
+					<div>
+						<input type="button" id="add" value="添加" class="btn btn-primary" v-on:click="add()">
+						<input type="button" id="reset" value="重置" class="btn btn-danger" v-on:click="resetdata()">						
+					</div>
+				</div>
+			</form>
+			<hr>
+			<div>
+				<table class="table table-bordered table-hover">					
+					<tr><td colspan="4" class="text-center"><span class="fontStyle">用户信息</span></td></tr>
+					<tr class="text-danger">
+							<th class="text-center">序号</th>
+							<th class="text-center">用户名</th>
+							<th class="text-center">手机号</th>
+							<th class="text-center">操作</th>
+					</tr>
+					<tr class="text-center" v-for="item in myData">
+						<td>{{$index+1}}</td>
+						<td>{{item.username}}</td>
+						<td>{{item.phonenumber}}</td>	
+						<td>
+							<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#layer" v-on:click="nowIndex=$index">删除</button>							
+						</td>					
+					</tr>
+					<tr v-show="myData.length==0">
+						<td colspan="4" class="text-center text-muted">
+							<p>暂无数据....</p>
+						</td>
+					</tr>
+					<tr v-show="myData.length>1">
+						<td colspan="4" class="text-center">
+							<input type="button" id="deleteAll" value="全部删除" class="btn btn-danger" data-toggle="modal" data-target="#layer" v-on:click="msg='确认删除全部数据吗？',nowIndex=-1">
+						</td>
+					</tr>
+				</table>
+				<div role="dialog" class="modal fade bs-example-modal-sm" id="layer">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">
+									<span>&times;</span>
+								</button>
+								<h4>{{msg}}</h4>
+							</div>
+							<div class="modal-body text-right">
+								<button data-dismiss="modal" class="btn btn-primary btn-sm">取消</button>
+								<button data-dismiss="modal" class="btn btn-danger btn-sm" v-on:click="deleteData(nowIndex)">确认</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
