@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title></title>
+ <meta charset="utf-8">
+ <script src="http://unpkg.com/vue/dist/vue.js"></script>
+ <script src="http://files.cnblogs.com/files/zycbloger/vue-resource.min.js"></script>
+ <script type="text/javascript">
+  window.onload = function(){
+   var vm = new Vue({
+    el:'#box',
+    data:{
+     msg:'Hello World!',
+     path:'a.txt'
+    },
+    methods:{   
+        get:function(){
+            this.$http.get('http://192.168.2.108:8001/a.txt').then(function(res){
+                alert(1+res.data);
+            },function () {
+                alert(2);
+            }
+            ); 
+        }       
+   }
+  })
+  }
+ </script>
+</head>
+<body> 
+ <div id="box">
+  <input type="button" @click="get()" value="按钮">
+  <input type="button" @click="readAsText()" value="读取文本文件">
+ </div>
+</body>
+</html>

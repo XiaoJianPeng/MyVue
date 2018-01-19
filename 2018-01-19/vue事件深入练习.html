@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue事件深入练习</title>
+
+    <script src="..\vue.js"></script>
+    <script>
+        window.onload=function(){
+            //过滤器
+            Vue.filter('uppercase', function(value) {
+                if (!value) { return ''}
+                  alue = value.toString()
+                return value.toUpperCase()
+            });
+            Vue.filter('capitalize', function(value) {
+                if (!value) { return ''}
+                  alue = value.toString()
+                return value.charAt(0).toUpperCase() + value.slice(1)
+            });
+            new Vue({
+                el:"#box",
+                data:{
+                    url:'https://www.baidu.com/img/bd_logo1.png',
+                    w:'200px',
+                    t:'这是一张美丽的图片',
+                    msg:'<span>abdsisad</span>',
+                    msg2:'asdsada'
+                },
+                methods:{
+                    show:function(b,ev){
+                        alert(ev.clientX);
+                        alert(b);
+                    },
+                    show1:function(ev){
+                        alert(1);
+                        //阻止阻止浏览器默认的事件冒泡行为
+                        ev.cancelBubble=true;
+                    },
+                    show2:function(n){
+                        alert(n);
+                    },
+                    show3:function(ev){
+                        alert(10);
+                        //ev.preventDefault();//取消事件的默认动作。                        
+                    },
+                    keyShow(ev){
+                        if(ev.keyCode==13){
+                            alert('你按回车了;'+ev.key);
+                            return;
+                        }                        
+                        alert(ev.keyCode);                        
+                    },
+                    keyUpShow(ev){
+                        alert('你按回车了;'+ev.key);
+                    }
+                }
+            })            
+        }
+    </script>
+</head>
+<body>
+    <div id="box" >
+        <div @click="show2(1)">
+            <span>事件冒泡</span>
+            <input type="button" value="Click" @click="show(12,$event)">
+            <input type="button" value="按钮" @click="show1($event)">
+            <! .stop--事件冒泡只执行一次后停止!-->
+            <input type="button" value="按钮1" @click.stop="show2(2)">
+        </div>
+        <div>
+            <span>阻止默认浏览器事件</span>
+            <!--contextmenu 属性是 HTML5 中的新属性。contextmenu 属性为元素规定上下文菜单。
+                这个菜单会在用户右键点击元素时出现。contextmenu 属性的值是需要打开的 <menu> 元素的 id。!-->
+            <input type="button" value="按钮1" @contextmenu="show3($event)">
+            <input type="button" value="按钮2" @contextmenu.prevent="show3($event)">
+        </div>
+        <br>
+        <div>
+            <span>键盘事件</span>
+            <input type="text" @keydown="keyShow($event)">
+            <br>
+            <input type="text" @keyup="keyShow($event)">
+            <input type="text" @keyup.13="keyUpShow($event)">
+        </div>
+        <div>
+            <span>属性</span><br>     
+            <img :src="url" alt="" :width="w" :title="t">
+            
+        </div>
+        <div>
+            <span>模版</span>
+            <input type="text" v-model="msg">
+            <br>
+            {{msg}}
+            <br>
+            <span v-once>这个只绑定一次{{msg}}</span>
+            <br>
+            <span v-html="msg">这个使用html样式</span>
+        </div>
+        <div>
+
+            <span>过滤器</span>
+           <br> 
+           {{'welcome'|uppercase}}
+           <br>
+           {{'welcome'|capitalize}}
+           
+           <div v-bind:id="msg2 | formatId"></div>
+        </div>
+    </div>    
+</body>
+</html>

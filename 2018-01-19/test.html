@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="..\vue.js"></script>
+    <script src="..\vue-resource.js"></script>
+    <script>
+            import axios from 'axios'  
+            Vue.prototype.$http = axios;  
+            export default{
+                data(){
+                    return {
+                        focusList:[]      //存储请求返回的数据
+                    }
+                },
+                mounted(){
+                    this.getFocusList()
+                },
+                methods:{
+                    getFocusList(){                   //http get请求data.json 的数据
+                        var vm = this;
+                        this.$http.get('src/assets/data/data.json')
+                            .then(function(res){
+                                vm.focusList = res.data;
+                            })
+                            .catch(function(err){
+                                console.log(err)
+                            })
+                    }
+                }
+            }
+        </script>
+        <style scoped>
+        #focus{text-align:left;}
+        #focus ul{margin:0 auto;width:50rem;border-bottom:none;}
+        #focus p{margin:0;}
+        #focus li{width:46rem;display:block;border-bottom:1px solid #ddd;padding:0.5rem 2rem;cursor:default;}
+        #focus img{height:4rem;margin-left:-1rem;}
+        .fportraits{float:left;width:4rem;height:4rem;border-radius:50%;overflow:hidden;}
+        .details{float:left;margin-left:1rem;}
+        .isfocused{float:right;font-size:0.8rem;height:0.8rem;line-height:0.8rem;margin:0;}
+        .clearfix{clear:both;}
+        </style>
+</head>
+<body>
+    <template>  
+        <div id="focus">
+            <ul >
+                <li v-for="(item,index) in focusList">
+                    <div class="fportraits">
+                        <img :src="'./src/'+item.portrait" :alt="item.name">
+                    </div>
+                    <div class="details">
+                        <div class="ftitle"><strong> {{ item.name }} </strong></div>
+                        <p> {{ item.production }} </p>
+                    </div>
+                    <div class="isfocused">
+                        <p>取消关注</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </li>
+            </ul>
+        </div>
+    </template>
+</body>
+</html>
