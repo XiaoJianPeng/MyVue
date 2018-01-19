@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>vue事件深入练习</title>
 
-    <script src="..\vue.js"></script>
+    <script src="vue.js"></script>
     <script>
         window.onload=function(){
             //过滤器
@@ -46,29 +46,41 @@
                         alert(10);
                         //ev.preventDefault();//取消事件的默认动作。                        
                     },
-                    keyShow(ev){
+                    keyShow:function(ev){
                         if(ev.keyCode==13){
                             alert('你按回车了;'+ev.key);
                             return;
                         }                        
                         alert(ev.keyCode);                        
                     },
-                    keyUpShow(ev){
+                    keyUpShow:function(ev){
                         alert('你按回车了;'+ev.key);
+                    },
+                    outSideWork:function ()
+                    {
+                        alert('My name is outSide,I was working...');
+                    },
+                    inSideWork:function ()
+                    {
+                        alert('My name is inSide,I was working...');
                     }
                 }
             })            
-        }
+        };
+       
     </script>
 </head>
 <body>
     <div id="box" >
-        <div @click="show2(1)">
+        <div @click="outSideWork()" id="outSide" style="width:100px; height:100px; background:#000; padding:50px">
+           <div @click.stop="inSideWork()" id="inSide" style="width:100px; height:100px; background:#CCC"></div>
+        </div>
+        <div @click="show2(3)">
             <span>事件冒泡</span>
             <input type="button" value="Click" @click="show(12,$event)">
             <input type="button" value="按钮" @click="show1($event)">
-            <! .stop--事件冒泡只执行一次后停止!-->
-            <input type="button" value="按钮1" @click.stop="show2(2)">
+            <! .stop--事件冒泡只执行一次后停止!vue绑定的事件执行顺序是自内向外的 先执行child 再执行parent-->
+            <input type="button" value="事件冒泡按钮1" @click.stop="show2(2)">
         </div>
         <div>
             <span>阻止默认浏览器事件</span>
