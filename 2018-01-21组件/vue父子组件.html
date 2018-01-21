@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue组件</title>
+    <script src="..\bower_components/vue/dist/vue.js"></script>
+    <style>      
+    </style>
+    
+</head>
+<body>
+    <div id="box">
+        <aaa></aaa>
+        <a1></a1>
+    </div>
+    <template id="a1">
+        <h1>11111</h1>
+        <ccc :mmm="msg2" :myMsg="msg"></ccc>
+    </template>
+    <script>
+        var vm=new Vue({
+            el:'#box',
+            data:{
+                a:'aaa'
+            },
+            components:{
+                'aaa':{
+					template:'<h2>我是父组件</h2><br><bbb></bbb>',
+                    components:{
+                        'bbb':{
+                            template:'<h2>我是子组件</h2>'
+                        }
+                    }
+				},
+                'a1':{
+                    data(){
+                        return {
+                            msg:111,
+                            msg2:'我是父组件a1的数据'
+                        }
+                    },
+                    template:'#a1',
+                    components:{
+                        'ccc':{
+                            props:['mmm','myMsg'],
+							template:'<h3>我是ccc组件->{{mmm}} <br> {{myMsg}}</h3>'
+                        }
+                    }
+                }
+				
+            }
+        });
+    </script>
+</body>
+</html>

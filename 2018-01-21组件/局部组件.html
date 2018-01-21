@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue组件</title>
+    <script src="..\bower_components/vue/dist/vue.js"></script>
+    <style>      
+    </style>
+    
+</head>
+<body>
+    <div id="box">
+        <bbb></bbb>
+        <hr>
+        <my-aaa></my-aaa>
+    </div>    
+    <script>
+        var Bbb=Vue.extend({
+            template:'<h3>{{msg}}</h3>',
+            data(){
+                return {
+                    msg:'B 局部组件'
+                }
+            }
+        });    
+        var vm=new Vue({
+            el:'#box',
+            components:{ //局部组件
+                'bbb':Bbb,
+                'my-aaa':{
+                    data(){
+                        return {
+                            msg:'welcome vue'
+                        }
+                    },
+                    methods:{
+                        change(){
+                            this.msg='changed';
+                        }
+                    },
+                    template:'<h2 @click="change">标题2->{{msg}}</h2>'
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

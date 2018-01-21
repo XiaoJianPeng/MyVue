@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue组件</title>
+    <script src="..\bower_components/vue/dist/vue.js"></script>
+    <style>      
+    </style>
+    
+</head>
+<body>
+    <div id="box">
+        <aaa></aaa>
+        <bbb></bbb>
+        <myaaa></myaaa>
+        <mybbb></mybbb>
+    </div>
+
+    <script>
+        var Aaa=Vue.extend({
+            data(){
+                return {
+                    msg:'A我是笔筒^_^'
+                };
+            },
+            methods:{
+                change(){
+                    this.msg='A数据发生改变'
+                }
+            },
+            template:'<h3 @click="change">{{msg}}</h3>'
+        });
+
+        var Bbb=Vue.extend({
+            template:'<h3>{{msg}}</h3>',
+            data(){
+                return {
+                    msg:'B 局部组件'
+                }
+            }
+        });
+        Vue.component('aaa',Aaa);
+        //组件的其他编写方法
+        Vue.component('myaaa',{
+            template:'<strong>MA组件的另一种编写方法</strong>'
+        });
+
+        var vm=new Vue({
+            el:'#box',
+            data:{
+            },
+            components:{ //局部组件
+				'bbb':Bbb,
+                'mybbb':{
+                    data(){
+                        return {
+                            m:'MB组件的另一种编写方法'
+                        }
+                    },
+                    methods:{
+                        change2(){
+                            this.m='Mb局部组件数据发生改变';
+                        }
+                    },
+                    template:'<h2 @click="change2">这是--》{{m}}</h2>'
+                }
+            }
+        });
+    </script>
+</body>
+</html>

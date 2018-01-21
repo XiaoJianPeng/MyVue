@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue组件</title>
+    <script src="..\bower_components/vue/dist/vue.js"></script>
+    <style>      
+    </style>
+    
+</head>
+<body>
+    <div id="box">
+        <input type="button" value="A" @click="a='aaa'">
+        <input type="button" value="B" @click="a='bbb'">
+        <component :is="a"></component>
+    </div>
+    
+    <script>
+        var vm=new Vue({
+            el:'#box',
+            data:{
+                a:'aaa'
+            },
+            components:{
+                'aaa':{
+					template:'<h2>我是aaa组件</h2>'
+				},
+				'bbb':{
+					template:'<h2>我是bbb组件</h2>'
+				}
+            }
+        });
+    </script>
+</body>
+</html>
