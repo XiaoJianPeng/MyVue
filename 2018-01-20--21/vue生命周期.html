@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>vue生命周期</title>
+    <script src="../vue.js"></script>
+    <script>      
+    </script>
+</head>
+<body>
+    <div id="box">
+        {{msg}}        
+        <button onclick="mydest()">销毁</button> 
+        // 调用销毁事件不能用@click=""
+        <input type="button" value="点这里销毁vue" onclick="mydest()">
+        <script>
+            var vm=new Vue({
+                el:'#box',
+                data:{
+                    msg:'hello'
+                },
+                beforeCompile:function(){
+                    alert('编译之前');
+                },
+                created:function(){
+                    alert('vue实例已创建');
+                },              
+                compiled:function(){
+                    alert('编译之后');
+                },
+                ready:function(){
+                    alert('插入到文本');
+                },
+                beforeDestroy:function()
+                {
+                    alert('销毁之前');
+                },                
+                destroyed:function(){
+                    alert('销毁之后');
+                },
+            });    
+            //销毁事件不能写在vue里 
+            function mydest(){
+                alert(1);
+                vm.$destroy();
+            };
+        </script>
+    </div>
+</body>
+</html>

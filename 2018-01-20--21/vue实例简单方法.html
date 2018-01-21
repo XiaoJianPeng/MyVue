@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">   
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>vue实例简单方法</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="box">
+       {{a}}        
+    </div>
+    <script>
+           var vm=new Vue({
+                aa:123,
+                show:function(){
+                    alert(1);
+                },
+                data:{
+                    a:12,
+                    b:22
+                }
+           }).$mount('#box');
+           vm.$options.show();
+           vm.$el.style.background='red'; 
+           console.log(vm.$data.a);
+           console.log(vm.$options.aa);
+           console.log(vm.$log());
+    </script>
+</body>
+</html>
