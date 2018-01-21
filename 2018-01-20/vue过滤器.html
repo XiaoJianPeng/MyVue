@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue过滤器</title>
+    <script src="..\vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        <div>
+            <h3>过滤器</h3>
+            <!--debounce配合事件，延迟执行  !-->
+            <input type="text" @keyup="show | debounce 2000">
+            <input type="text" v-model="a">
+            <br>
+            <ul>
+                <span>没有过滤</span>
+                <li v-for="val in arr">
+                    {{val}};
+                </li>
+            </ul>
+            <ul>
+                <span>filterBy 过滤数据   limitBy : 取几个</span>
+                <li v-for="val in arr | filterBy a | limitBy 1">
+                    {{val}};
+                </li>
+            </ul>
+            <ul>
+                <span>orderBy	排序1  -> 正序   -1 -> 倒序</span>
+                <li v-for="val in arr | orderBy -1 ">
+                    {{val}};                   
+                </li>
+            </ul>
+        </div>
+        <div>
+            <hr>
+            <h4>自定义过滤器</h3>
+             <input type="text" v-model="msg">
+             <br>{{msg | toDou}}
+             <div> 
+                 时间过滤器: 时间戳：{{d}}； 时间：{{d | date}} 
+             </div>
+             <div v-html="m | filterHtml">
+
+             </div>
+             <hr>
+             <h4>双向过滤器</h3>
+            <div v-html="m | vHtml">
+            </div>
+        </div>
+    </div>
+    <script>
+        Vue.filter('toDou',function(input ){            
+            return input<10?'0'+input:''+input;
+        });
+        Vue.filter('date',function(d) {
+            var oDate=new Date(d);
+            return oDate.getFullYear()+'-'+oDate.getMonth()+1+'-'+oDate.getDate()+' '+oDate.getHours()
+            +':'+oDate.getMinutes() +':'+oDate.getSeconds();
+        });
+        Vue.filter('filterHtml',function(input){
+            return input.replace(/<[^<]+>/g,'');
+        });
+        //双向过滤器
+        Vue.filter('vHtml',{
+            read:function(input){
+                return input.replace(/<[^<]+>/g,'');
+            },
+            write:function(val){
+                return val;
+            }
+        });
+        var vm=new Vue({
+            data:{
+                arr:['width','height','background','orange'],
+                a:'',
+                msg:7,
+                d:Date.now(),
+                m:'<strong>welcome</strong>'
+            },
+            methods:{
+                show:function(){
+                    alert(1);
+                }
+            }
+        }).$mount('#box');
+    </script>
+</body>
+</html>

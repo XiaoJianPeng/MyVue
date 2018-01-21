@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue自定义指令</title>
+    <style>
+        zns-red{
+            width:100px;
+            background: gray;
+            margin-top: 200px;
+            height:100px;
+            display: block;
+        }
+    </style>
+    <script src="..\vue.js"></script>
+</head>
+<body>
+    <div id ="box">
+        <span  v-bg="'red'">{{msg}}</span>
+        <!--//拖拽和样式同时使用 !-->
+        <div v-drag v-ds="{color : 'red',width : '100px'}" >1</div>   
+        <hr>     
+        <div v-drag v-ds="{color : 'blue',width : '200px'}" >2</div>
+        <!--
+        <div v-drag :style="{width:'100px', height:'100px', background:'blue', position:'absolute', right:0, top:0}">3</div>
+        <div v-drag :style="{width:'100px', height:'100px', background:'red', position:'absolute', left:0, top:0}">4</div>
+        !-->
+        <div id="box">
+            <zns-red></zns-red>
+        </div>
+    </div>
+    
+    <script>
+        Vue.directive('bg',function(color){
+            this.el.style.background=color;
+        });
+        //传入多个参数时要使用json串
+        Vue.directive('ds',function(value){
+            this.el.style.background=value.color;
+            this.el.style.width=value.width;
+            this.el.style.height='100px';
+            this.el.style.position='absolute';            
+        });
+        Vue.directive('drag',function(){
+            
+            var oDiv=this.el;
+            oDiv.onmousedown=function(ev){                
+                var disX=ev.clientX-oDiv.offsetLeft;
+                var disY=ev.clientY-oDiv.offsetTop;
+
+                document.onmousemove=function(ev){
+                    var l=ev.clientX-disX;
+                    var t=ev.clientY-disY;
+                    oDiv.style.left=l+'px';
+                    oDiv.style.top=t+'px';
+                };
+                document.onmouseup=function(){
+                    document.onmousemove=null;
+                    document.onmouseup=null;
+                };
+            };
+        });
+        //元素指令
+        Vue.elementDirective('zns-red',{
+            bind:function(){
+                this.el.style.background='green';
+            }
+        });
+        var vm=new Vue({
+            el:"#box",
+            data:{
+                msg:"你好",
+                a:'blue'
+            }
+        });
+    </script>
+</body>
+</html>

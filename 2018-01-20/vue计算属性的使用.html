@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">   
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>vue实例简单方法</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="box">
+       a--->{{a}}      <br>  
+       b--->{{b}}
+       <button onclick="changeA()">改变a</button>
+       <input type="button" value="改变B" onclick="changeB()">
+    </div>
+    <script>
+           var vm=new Vue({
+                el:"#box",
+                data:{
+                    a:1
+                },
+                computed:{
+                    b:{
+                        get:function(){
+                            return this.a+1;
+                        },
+                        set:function(val){
+                            console.log('3:'+vm.b);
+                            this.a=val;
+                           //set中改变计算属性本身会引起死循环 this.b=200;
+                            console.log('4:'+vm.b);
+                        }
+                    }
+                }
+           });
+           function changeA(){
+                vm.a=100;
+            };
+            function changeB(){
+                console.log('1:'+vm.b);
+                vm.b=vm.b+1;
+                console.log('2:'+vm.b);
+            };
+    </script>
+</body>
+</html>
