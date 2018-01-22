@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="..\bower_components/vue/dist/vue.js"></script>
+	<script src="..\bower_components/vue-router/dist/vue-router.js"></script>
+	<style>
+        .v-link-active{
+            font-size: 20px;
+            color:red;
+        }
+	</style>
+</head>
+<body>
+	<div id="box">
+		<div>
+            <span>导航栏:
+                <a v-link="{path:'/home'}">主页</a> 
+                <a v-link="{path:'/news'}">新闻</a> 
+            </span>
+        </div>
+        <div>
+            <router-view></router-view>
+        </div>
+	</div>
+    <template id="home">
+        <h3>我是主页</h3>
+        <div>
+            <a v-link="{path:'/home/login'}">登录</a>
+            <a v-link="{path:'/home/reg'}">注册</a>
+        </div>
+        <div>
+            <router-view></router-view>
+        </div>
+    </template>
+    <template id="news">
+        <h3>我是新闻</h3>
+        <div>
+            <a v-link="{path:'/news/detail/001'}">新闻001</a>
+            <a v-link="{path:'/news/detail/002'}">新闻002</a>
+        </div>
+        <router-view></router-view>
+    </template>
+    <template id="detail">
+        {{$route.params | json}}
+        <br>
+        {{$route.path}}
+        <br>
+        {{$route.query | json}}
+    </template>
+	<script>
+        var App=Vue.extend(); //根组件
+        //home 和 news组件
+        var Home=Vue.extend({
+            template:'#home'
+        });
+        var News=Vue.extend({
+            template:'#news'
+        });
+        var Detail=Vue.extend({
+            template:'#detail'
+        });
+
+        //准备路由
+        var router=new VueRouter();
+
+        //关联
+        router.map({
+            'home':{
+                component:Home,
+                subRoutes:{
+                    'login/:name':{
+                        component:{
+                            template:'<stong>登录信息{{$route.params | json}}</stong>'
+                        }
+                    },
+                    'reg':{
+                        component:{
+                            template:'<stong>注册信息</stong>'
+                        }
+                    }
+                }
+            },
+            'news':{
+                component:News,
+                subRoutes:{
+                    '/detail/:id':{
+                        component:Detail
+                    }
+                }
+            }
+        });
+        //启动路由
+        router.start(App,'#box');
+        //跳转
+        router.redirect({
+            '/':'/home'
+        });
+	</script>
+</body>
+</html>
