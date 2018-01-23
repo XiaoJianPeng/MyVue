@@ -111,3 +111,114 @@ vue默认情况下，子组件也没法访问父组件数据
 
 	v-on:	@
 --------------------------------------------
+slot:
+	位置、槽口
+	作用: 占个位置
+
+	类似ng里面 transclude  （指令）
+--------------------------------------------
+vue-> SPA应用，单页面应用
+	vue-resouce	交互
+	vue-router	路由
+
+	根据不同url地址，出现不同效果
+
+	咱上课: 0.7.13
+
+主页	home
+新闻页	news
+
+
+html:
+	<a v-link="{path:'/home'}">主页</a>	跳转链接
+	
+	展示内容:
+	<router-view></router-view>
+js:
+	//1. 准备一个根组件
+	var App=Vue.extend();
+
+	//2. Home News组件都准备
+	var Home=Vue.extend({
+		template:'<h3>我是主页</h3>'
+	});
+
+	var News=Vue.extend({
+		template:'<h3>我是新闻</h3>'
+	});
+
+	//3. 准备路由
+	var router=new VueRouter();
+
+	//4. 关联
+	router.map({
+		'home':{
+			component:Home
+		},
+		'news':{
+			component:News
+		}
+	});
+
+	//5. 启动路由
+	router.start(App,'#box');
+
+跳转:
+	router.redirect({
+		‘/’:'/home'
+	});
+--------------------------------------
+路由嵌套(多层路由):
+	
+	主页	home
+		登录	home/login
+		注册	home/reg
+	新闻页	news
+
+	subRoutes:{
+		'login':{
+			component:{
+				template:'<strong>我是登录信息</strong>'
+			}
+		},
+		'reg':{
+			component:{
+				template:'<strong>我是注册信息</strong>'
+			}
+		}
+	}
+路由其他信息:
+	/detail/:id/age/:age
+
+	{{$route.params | json}}	->  当前参数
+
+	{{$route.path}}	->  当前路径
+	
+	{{$route.query | json}}	->  数据
+--------------------------------------------
+vue-loader:
+	其他loader ->  css-loader、url-loader、html-loader.....
+
+	后台: nodeJs	->  require  exports
+	broserify  模块加载，只能加载js
+	webpack   模块加载器， 一切东西都是模块, 最后打包到一块了
+
+	require('style.css');	->   css-loader、style-loader
+
+	
+	vue-loader基于webpack
+
+	.vue文件:
+		放置的是vue组件代码
+
+		<template>
+			html
+		</template>
+	
+		<style>
+			css
+		</style>
+	
+		<script>
+			js	（平时代码、ES6）	babel-loader
+		</script>

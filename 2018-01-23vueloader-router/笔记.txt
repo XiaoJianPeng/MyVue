@@ -1,0 +1,43 @@
+js中const,var,let区别：
+    1.const定义的变量不可以修改，而且必须初始化。
+    2.var定义的变量可以修改，如果不初始化会输出undefined，不会报错。
+    3.let是块级作用域，函数内部使用let定义后，对函数外部无影响。
+
+手动配置自己:
+	webpack+vue-loader
+
+	webpack加载模块
+-------------------------------------
+如何运行此项目？
+	1. npm install	或者    cnpm install
+	2. npm run dev
+		->  package.json
+			"scripts":{
+				"dev":"webpack-dev-server --inline --hot --port 8082"
+			}
+以后下载模块：
+	npm install <package-name>  --save-dev
+
+EADDRINUSE	端口被占用
+.vue 结尾，之后称呼组件
+路由:
+	vue-router
+
+		->  如何查看版本:
+			bower info vue-router
+
+	路由使用版本: 0.7.13
+配合vue-loader使用:
+1. 下载vue-router模块
+	cnpm install vue-router@0.7.13
+2. import VueRouter from 'vue-router'
+
+3. Vue.use(VueRouter);
+
+4. 配置路由
+	var router=new VueRouter();
+	router.map({
+		路由规则
+	})
+5. 开启
+	router.start(App,'#app');

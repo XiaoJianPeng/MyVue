@@ -1,4 +1,4 @@
 #ignore these files 
 
 2018-01-22vueloader/node_modules/*
-
+*/node_modules/*
