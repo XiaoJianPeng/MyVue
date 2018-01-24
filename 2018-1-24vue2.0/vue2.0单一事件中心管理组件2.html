@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.js"></script>
+    <script>  
+        window.onload=function(){
+            var vm=new Vue({
+                    el:"#box",
+                    data:{
+                        m:'单一事件中心管理组件'
+                    },
+                    components:{
+                        'aaa':A,
+                        'bbb':B,
+                        'ccc':C
+                    }
+            });
+        }
+        
+    </script>
+</head>
+<body>
+    <template id="a">
+        <div>
+            <span>这是A组件数据：</span>{{a}}
+            <input type="button" value="发送A数据到C组件" @click="send" >
+        </div>
+    </template>
+    <template id="b">
+        <div>
+            <span>这是B组件数据：</span>{{a}}
+            <input type="button" value="发送B数据到C组件" @click="send" >
+        </div>
+    </template>
+    <template id="c">
+        <div>
+            这里是C组件数据：{{c}}
+            <br><span>这里接收A组件数据：</span>{{a}}
+            <br><span>这里接收B组件数据：</span>{{b}}
+        </div>
+    </template>
+    <div id="box">
+        <h3>{{m}}</h3>
+        <aaa></aaa>
+        <bbb></bbb>
+        <ccc></ccc>
+    </div>    
+    <script>
+   
+        var Event=new Vue();//创建空的实例对象  
+        var A={
+            template:'#a',
+            methods:{
+                send(){
+                    Event.$emit('a-msg',this.a)
+                }
+            },
+            data(){
+                return {
+                    a:'A数据'
+                }
+            }
+        };
+        var B={
+            template:'#b',
+            methods:{
+                send(){
+                    Event.$emit('b-msg',this.a)
+                }
+            },
+            data(){
+                return {
+                    a:'B数据'
+                }
+            }
+        };
+        var C={
+            template:'#c',
+            methods:{
+
+            },
+            data(){
+                return {
+                    c:'c数据',
+                    a:'',
+                    b:''
+                }
+            },
+            mounted(){
+                //接收数据
+                Event.$on('a-msg',function(a){
+                    this.a=a;
+                }.bind(this));  
+                Event.$on('b-msg',function(b){
+                    this.b=b;
+                }.bind(this));
+            },
+        };
+    </script>
+</body>
+</html>

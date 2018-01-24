@@ -1,10 +1,10 @@
 <template>
+	<div class="box">
 	<h3>当前是主页</h3>
 	<ul>
-		<li>用户</li>
-		<li>注册</li>
-	</ul>
-	<div class="box">
+		<li v-link="{path:'/home/login'}">登录</li>
+		<li v-link="{path:'/home/reg'}">注册</li>
+	</ul>	
 		<router-view></router-view>
 	</div>
 </template>

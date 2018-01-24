@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src='vue.js'></script>
+    <script>
+        //vue2.0组件 简洁定义方式
+        var Home={
+            template:'#aaa'
+        };
+        //vue1.0的写法
+        // Vue.component('my-aaa',{
+        //     template:'<h3>我是组件</h3><strong>我是加粗标签</strong>'
+        // });
+
+        //Vue.component('my-aaa',Home);
+        Vue.component('my-bbb',{
+            template:'#bbb'
+        })
+        window.onload=function(){
+            new Vue({
+                el:'#box',
+                data:{
+                    msg:'welcome vue2.0'
+                },
+                components:{
+                    'my-aaa':Home
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <template id="aaa">
+        <div><!--vue2.0中模版必须有根元素包裹所有代码 !-->
+            <h3>vue2.0组件 </h3>
+            <strong>这是加粗标签</strong>
+            
+        </div>
+    </template>
+    <template id="bbb">
+        <div>
+            <h3>vue2.0组件模版</h3>
+        </div>
+    </template>
+    <div id="box">
+        {{msg}}
+        <my-aaa></my-aaa>
+        <my-bbb></my-bbb>
+    </div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue2.0生命周期</title>
+    <script src='vue.js'></script>
+    <script>    
+        window.onload=function(){
+            new Vue({
+                el:'#box',
+                data:{
+                    msg:'welcome vue2.0'
+                },
+                methods:{
+                    change(){
+                        this.msg='你好！'
+                    },
+                    destroy(){
+                        this.$destroy();
+                    }
+                },
+                beforeCreate(){
+                    console.log('组件实例刚刚被创建,没有属性');
+                },
+                created(){
+                    console.log('组件实例已经创建完成');
+                },
+                beforeMount(){
+                    console.log('模版编译之前');
+                },
+                mounted(){
+                    console.log('模版编译之后');
+                },
+                beforeUpdate(){
+                    console.log('组件更新之前');
+                },
+                updated(){
+                    console.log('组件更新完成');
+                },
+                beforeDestroy(){
+                    console.log('组件销毁之前');
+                },
+                destroyed(){
+                    console.log('组件销毁完成');
+                }
+
+            });
+        }
+    </script>
+</head>
+<body>
+    
+    <div id="box">
+       {{msg}}
+       <input type="button" value="更新msg" @click="change">
+       <br>
+       <input type="button" value="销毁组件" @click="destroy">
+    </div>
+</body>
+</html>

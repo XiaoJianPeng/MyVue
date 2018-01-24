@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue2.0循环</title>
+    <script src='vue.js'></script>
+    <script>    
+        window.onload=function(){
+            new Vue({
+                el:'#box',
+                data:{
+                    msg:'welcome vue2.0',
+                    list:['AA','BB','DD','CC'],
+                    json:{
+                        a:'AA',
+                        B:'BB',
+                        c:'CC'
+                    }
+                },
+                methods:{
+                    add(){
+                        this.list.push('EE')
+                    }
+                },
+             
+            });
+        }
+    </script>
+</head>
+<body>
+    
+    <div id="box">
+       {{msg}}
+       <input type="button" value="添加" @click="add">
+      <br>
+      <ul>
+          <li v-for="(val,index) in list" :id="index">
+              {{val}} {{index}} 
+          </li>
+      </ul>
+      <ul>
+            <!--顺序 val,key ,index  !-->
+            <li v-for="(val,key,index) in json">
+                {{val}} {{key}} {{index}} 
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
