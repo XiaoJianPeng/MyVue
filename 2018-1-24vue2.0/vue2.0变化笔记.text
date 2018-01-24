@@ -1,4 +1,4 @@
-vue2.0:
+﻿vue2.0:
 	bower info vue
 
 	http://vuejs.org/
@@ -121,10 +121,14 @@ vue2.0:
 	var Event=new Vue();//必须new一个Vue对象
 
 	Event.$emit(事件名称, 数据)
-
+	数据两种接收方式
 	Event.$on(事件名称,function(data){
 		//data
 	}.bind(this));
+	var _this = this;
+        Event.$on('a-msg',function(a){
+             _this.a=a;
+        });
     
     Event.$emit('msg',this.msg);　发送数据，第一个参数是发送数据的名称，接收时还用这个名字接收，
     第二个参数是这个数据现在的位置；
