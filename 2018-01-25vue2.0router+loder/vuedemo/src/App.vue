@@ -3,8 +3,7 @@
     <h1>{{ msg }}</h1>
      <ul>
       <li>
-        <router-link to="/home">主页</router-link>
-        <br>
+        <router-link to="/home">主页</router-link> 
         <router-link to="/news">新闻</router-link>
       </li>
     </ul> 

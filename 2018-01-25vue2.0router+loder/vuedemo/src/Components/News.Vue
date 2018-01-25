@@ -2,8 +2,8 @@
 	<div id="news">
 		<h3>这是新闻页</h3>
 		<ul>
-			<li v-for="(val,index) in news">
-				{{val}}
+			<li v-for="item in news">
+				 {{ item.message }}
 			</li>
 		</ul>
 	</div>
@@ -13,7 +13,10 @@
 		name:'news',
 		data(){
 			return {
-				news:['asda','2222adsaa2222','Cse','ttt']
+				news:[
+					{ message: 'Foo' },
+					{ message: 'Bar' }
+				]
 			}
 		}
 	}

@@ -82,6 +82,13 @@ npm install
 ------------------------------------------
 vue2.0 
 	vue-loader和vue-router配合   下载 webpack  下载vue-router 
+Vue 2.2.0+的版本里，当在组件中使用v-for时，key是必须的。
+
+更改vetur配置            vscode->首选项->设置->搜索（vetur）
+"vetur.validation.template": true,改成：false
+<li v-for="item in news">
+   {{ item.message }}
+</li>
 ------------------------------------------
 
 style-loader	css-loader
