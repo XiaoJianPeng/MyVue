@@ -1,23 +1,23 @@
 <template>
   <div id="app">
-    <h1>{{ msg }}</h1>
-      <router-link to="/home">主页</router-link>
-      <router-link to="/user">用户</router-link>
+    <h3>自定义组件</h3>
+    <loading></loading>
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'app',
   data () {
     return {
-      msg: '欢迎你'
+      msg: 'Welcome to Your Vue.js App'
     }
   }
 }
 </script>
 
-<style>
+<style lang="scss">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
