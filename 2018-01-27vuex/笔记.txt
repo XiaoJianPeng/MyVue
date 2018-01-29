@@ -15,3 +15,5 @@ var promise1 = new Promise(function(resolve, reject) {
                 commit('increment');
             }, 1000);
         })
+
+注册leancloud
