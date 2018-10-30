@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page Title</title>
+</head>
+<body>
+  <div id="app">
+    <h3>{{message}}</h3>
+    <input v-model="message">
+    <p v-bind:title="title">鼠标悬停查看信息</p>
+    <p v-if="seen">我是P1，你可以看到我了</p>
+    <li v-for="item in toDoList">{{item.text}}</li>
+    <button v-on:click="clickHear">是否显示P1,逆转消息</button>
+    <ol>
+      <!-- 创建一个 todo-item 组件的实例 -->
+      <todo-item v-for="item in toDoList" v-bind:todo="item"></todo-item>
+    </ol>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script>
+    Vue.component('todo-item', {
+      props: ['todo'],
+      template: '<li>{{todo.text}}</li>'
+    })
+    var app = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello Vue.js!',
+        title: '页面加载于 ' + new Date().toLocaleString(),
+        seen: true,
+        toDoList: [
+          {text: '学习vuejs'},
+          {text: '学习nodeJs'},
+          {text: '学习vuex'},
+          {text: '学习webpack'},
+        ]
+      },
+      methods: {
+        clickHear() {
+          this.seen = !this.seen
+          this.message = this.message.split('').reverse().join('')
+        }
+      },
+    })
+    
+  </script>
+</body>
+</html>
